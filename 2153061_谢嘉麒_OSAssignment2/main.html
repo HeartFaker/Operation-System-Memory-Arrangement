@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>2153061_谢嘉麒_Assignment2</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="image/logo.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <!--经过测试，得知jquery.js的引入需要放在应用其的.js文件之前-->
+    <script type="text/javascript" src="main.js"></script>
+
+    <div id="main" class="container">
+        <table class="table" style="border-radius: 50px 50px 10px 10px; background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%); box-shadow: 3px 5px 15px 0px rgba(0, 0, 0, 0.2), 3px 5px 15px 0 rgba(0, 0, 0, 0.19);">          
+            <tr class="nav_bar_box" style="height:10%">
+                <td colspan="4" class="outline_text">Welcome to Memory Arrangement</td>
+            </tr>
+            <tr style="background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);height:5%">
+                <td colspan="4" style="text-align: center;"><em><b>2153061_谢嘉麒_OS_Assignment2</b></em></td>
+                <td><b></b></td>
+            </tr>
+            <tr  style="height:65%">
+                <td style="width:30%;align-items: flex-start;" colspan="2">
+                    <table>
+                        <tr>
+                            <td style="width:30%;">
+                                <section class="childBox" style="height:160px;">
+                                    <h3>Parameter Information</h3>
+                                    <p>Number of Memory Blocks: 4</p>
+                                    <p>Total Number of Instructions: 320</p>
+                                    <p>Instructions Stored Per Page: 10</p>
+                                </section>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:30%">
+                                <section class="childBox">
+                                    <h3>Analysis of Results</h3>
+                                    <p><strong>FIFO</strong></p>
+                                    <p>Missing Pages:<span id="FIFOMissPage">unknown</span></P>
+                                    <P>Page Missing Rate:<span id="FIFOMissingRate">unkonwn</span></p>
+                                    <p><strong>LRU</strong></p>
+                                    <p>Missing Pages:<span id="LRUMissPage">unknown</span></P>
+                                    <P>Page Missing Rate:<span id="LRUMissingRate">unknown</span></p>
+                                </section>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <select id="alg-select" class="filter-box">
+                                    <option value="FIFO">FIFO&nbsp;Algotithm</option>
+                                    <option value="LRU">LRU&nbsp;Algotithm</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button id="start-Btn" class="button" onclick="start(1)"><strong>直接执行</strong> </button>
+                            </td>
+                            <td>
+                                <button id="start-Btn" class="button" onclick="start(0)"><strong>单步执行</strong> </button>
+                            </td>
+                        <tr>
+                    </table>
+                </td>
+                <td style="width:70%" colspan="2">
+                    <table class="my_table show" id="memory_table" style="margin-top: 60px;">
+                        <thead>
+                            <tr class="my_tr" style="display: block;">
+                                <th class="my_th" scope="col" >Res No.</th>
+                                <th class="my_th" scope="col" >Instruction No.</th>
+                                <th class="my_th" scope="col" >Block1</th>
+                                <th class="my_th" scope="col" >Block2</th>
+                                <th class="my_th" scope="col" >Block3</th>
+                                <th class="my_th" scope="col" >Block4</th>
+                                <th class="my_th" scope="col" >Page-Fault</th>
+                            </tr>
+                        </thead>
+                        <tbody style="display:block; overflow: auto; height:400px">
+                            <tr>
+                                <td style="width:100%;font-family: Helvetica Neue, sans-serif;
+                                font-size: 1.25em;" colspan="7" >&nbsp;&nbsp;&nbsp;&nbsp;请在左下角选择算法，按下OPERATE按钮后系统将自动计算结果（默认为FIFO算法）</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr  style="height:20%">
+                <td colspan="4">
+                    <table>
+                        <tr>
+                            <td style="width:800px">
+                                <div style="background-color: aqua;border-radius: 15px;margin-left: 20px;">
+                                    <p>Frame 01</p>
+                                    <p class="text-xl">页号：
+                                        <span id="page-number1"></span>
+                                    </p>
+                                    <p>指令号：
+                                        <span id="instruction-number1"></span>
+                                    </p>
+                                </div>
+                            </td>
+                            <td style="width:800px">
+                                <div style="background-color: rgb(161, 165, 212);border-radius: 15px;margin-left: 20px;">
+                                    <p>Frame 02</p>
+                                    <p class="text-xl">页号：
+                                        <span id="page-number2"></span>
+                                    </p>
+                                    <p>指令号：
+                                        <span id="instruction-number2"></span>
+                                    </p>
+                                </div>
+                            </td>
+                            <td style="width:800px">
+                                <div style="background-color: rgb(175, 209, 162);border-radius: 15px;margin-left: 20px;">
+                                    <p>Frame 03</p>
+                                    <p class="text-xl">页号：
+                                        <span id="page-number3"></span>
+                                    </p>
+                                    <p>指令号：
+                                        <span id="instruction-number3"></span>
+                                    </p>
+                                </div>
+                            </td>
+                            <td style="width:800px">
+                                <div style="background-color: rgb(213, 215, 142);border-radius: 15px;margin-left: 20px;">
+                                    <p>Frame 04</p>
+                                    <p class="text-xl">页号：
+                                        <span id="page-number4"></span>
+                                    </p>
+                                    <p>指令号：
+                                        <span id="instruction-number4"></span>
+                                    </p>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>
